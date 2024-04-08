@@ -26,33 +26,33 @@
         <activity
             android:name=".AddContacts"
             android:exported="false" />
-        <activity
-            android:name=".ADDContacts"
-            android:exported="false" />
-        <activity
-            android:name=".Add_Contacts"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".Photo"
-            android:exported="false" />
-        <activity
-            android:name=".photo_frame"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ADDContacts"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".Add_Contacts"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".MainActivity2"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".Photo"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".photo_frame"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".For_Testing"
             android:exported="false" />
         <activity
             android:name=".SignUp"
             android:exported="false" />
-        <activity
-            android:name=".Edit_2"
-            android:exported="false" />
-        <activity
-            android:name=".Edit"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Edit_2"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".Edit"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".StartUpPage"
             android:exported="false" />
