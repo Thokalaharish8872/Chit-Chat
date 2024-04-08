@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#3aefe3</color>
+    <color name="Green">#008000</color>
+    <color name="Blue2">#005ce6</color>
+    <color name="Blue_for_start_up_page">#0066ff</color>
+    <color name="colorPrimary">#3F51B5</color> <!-- Replace with your desired color -->
+    <color name="colorPrimaryDark">#303F9F</color> <!-- Replace with your desired color -->
+    <color name="colorAccent">#FF4081</color> <!-- Replace with your desired color -->
+    <!-- Add other color definitions as needed -->
+</resources>

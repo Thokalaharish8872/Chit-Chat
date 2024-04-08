@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Edit_2">
+    <TextView
+        android:id="@+id/Note"
+        android:layout_width="320dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="320dp"
+        android:text="Your PhoneNumber is                        Do you want to edit?"
+        android:textSize="20dp"
+        android:textStyle="normal">
+    </TextView>
+    <TextView
+        android:id="@+id/Phone"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="-115dp"
+        android:layout_marginTop="320dp"
+        android:text="XXXXXXXXXX"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+    <Button
+        android:id="@+id/btn_no"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="-280dp"
+        android:layout_marginTop="390dp"
+        android:text="No"
+        android:textSize="12dp"
+        android:background="@drawable/background_edit"/>
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="390dp"
+        android:layout_marginLeft="-130dp"
+        android:text="Edit"
+        android:textSize="12dp"
+        android:background="@drawable/background_edit" />
+
+</LinearLayout>
