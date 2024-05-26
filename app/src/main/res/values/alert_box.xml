@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">#FFC107</item> <!-- dialog button color -->
+        <item name="android:textColorPrimary">#000000</item> <!-- dialog title and message color -->
+        <item name="android:background">#FFFFFF</item> <!-- dialog background color -->
+    </style>
+</resources>

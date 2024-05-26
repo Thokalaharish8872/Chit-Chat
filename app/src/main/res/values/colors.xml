@@ -8,6 +8,9 @@
     <color name="Blue_for_start_up_page">#0066ff</color>
     <color name="colorPrimary">#3F51B5</color> <!-- Replace with your desired color -->
     <color name="colorPrimaryDark">#303F9F</color> <!-- Replace with your desired color -->
-    <color name="colorAccent">#FF4081</color> <!-- Replace with your desired color -->
+    <color name="colorAccent">#FF4081</color>
+    <color name="orange">#e86100</color><!-- Replace with your desired color -->
     <!-- Add other color definitions as needed -->
+    <color name ="ShimmerColor">#808080</color>
+    <color name="StaleBlue">#6A5ACD</color>
 </resources>

@@ -1,9 +1,11 @@
 package com.example.neatrootslearning
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -25,9 +27,24 @@ class Login : AppCompatActivity() {
         var password1=findViewById<TextInputEditText>(R.id.editpassword)
         var Dont=findViewById<Button>(R.id.btn_Dont)
         var Login=findViewById<Button>(R.id.btn_Login)
+        var sharedPref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.clear() // This will clear all data in shared preferences
+        editor.apply()
+
 
 
         Login.setOnClickListener() {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Loading...")
+            progressDialog.show()
+            val window = progressDialog.window
+
+            // Create a new layout parameters object
+            val layoutParams = WindowManager.LayoutParams()
+
+            // Copy the existing layout parameters
+            layoutParams.copyFrom(window?.attributes)
 
             var phone = phone1.text.toString()
             var password = password1.text.toString()
@@ -38,9 +55,13 @@ class Login : AppCompatActivity() {
 
                 var user = users(name, phone, password)
                 if (phone.isNotEmpty()) {
+                    if(password.isNotEmpty()){
+
+
                     database = FirebaseDatabase.getInstance().getReference("users")
                     database.child(phone).get().addOnSuccessListener {
                         if (it.exists()) {
+                            progressDialog.dismiss()
                             var PhoneNumber = it.child("phone").value
                             var Password = it.child("password").value
                             if (Password == password) {
@@ -92,6 +113,7 @@ class Login : AppCompatActivity() {
                                     })
                                 builder1.show()
                             } else {
+                                progressDialog.dismiss()
                                 Toast.makeText(
                                     applicationContext,
                                     "Password incorrect",
@@ -99,20 +121,31 @@ class Login : AppCompatActivity() {
                                 ).show()
                             }
                         } else {
+                            progressDialog.dismiss()
                             Toast.makeText(this, "phoneNumber Does not exist", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }.addOnFailureListener {
+                        progressDialog.dismiss()
                         Toast.makeText(
                             applicationContext,
                             "Failed to Login",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                } else {
+                    }}
+                else{
+                    progressDialog.dismiss()
                     Toast.makeText(
                         applicationContext,
-                        "Please enter PhoneNumber",
+                        "Please Enter Your Password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }} else {
+                    progressDialog.dismiss()
+                    Toast.makeText(
+                        applicationContext,
+                        "Please Enter PhoneNumber",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

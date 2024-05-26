@@ -69,8 +69,13 @@ class AddContacts : AppCompatActivity() {
 //                                var circularimg=R.drawable.no_profile_pic
 //                                img2.setImageResource(circularimg)
 //                                var user = startuppagedata(pic=img2)
+                                database=FirebaseDatabase.getInstance().getReference("users")
+                                database.child(phoneNumber.toString()).child("Added Contacts").child(phone).child("Floating_Notifications").setValue("True")
+                                database.child(phoneNumber.toString()).child("Added Contacts").child(phone).child("nickname").setValue("Not Added")
+                                database = FirebaseDatabase.getInstance().getReference("users")
                                 database.child(phone2).get().addOnSuccessListener {
                                     var uriimg = it.child("photo").value.toString()
+
 
                                     // Save the contact to shared preferences
                                     database.child(phoneNumber.toString()).child("Added Contacts")
@@ -85,11 +90,11 @@ class AddContacts : AppCompatActivity() {
 
 
 
-                                intent = Intent(this, StartUpPage::class.java)
-                                intent.putExtra("phoneNumber", phone)
-                                startActivity(intent)
+                                    intent = Intent(this, StartUpPage::class.java)
+                                    intent.putExtra("phoneNumber", phone)
+                                    startActivity(intent)
+                                }
                             }
-                        }
 
                         } else {
                             txtname.isEnabled=false
@@ -117,5 +122,5 @@ class AddContacts : AppCompatActivity() {
 
             }
         }
-        }
     }
+}

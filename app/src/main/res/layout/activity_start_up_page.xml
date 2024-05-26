@@ -6,20 +6,137 @@
     android:layout_height="match_parent"
     tools:context=".StartUpPage">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+
+
+    <ImageView
+        android:id="@+id/Chats_tab_wallpaper3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
+        android:scaleType="centerCrop"
+        android:src="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
+        android:layout_width="403dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <include layout="@layout/eachprofile_shimmer" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_margin="5dp"
+                        android:background="@android:color/darker_gray"
+                        android:paddingLeft="-10dp"
+                        android:paddingTop="13dp"
+                        android:paddingBottom="10dp" />
+
+                </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/shimmer_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout_for_status" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include layout="@layout/shimmer_for_online" />
+
+        <include layout="@layout/shimmer_for_online" />
+        <include layout="@layout/shimmer_for_online" />
+        <include layout="@layout/shimmer_for_online" />
+        <include layout="@layout/shimmer_for_online" />
+        <include layout="@layout/shimmer_for_online" />
+        <include layout="@layout/shimmer_for_online" />
+        \<include layout="@layout/shimmer_for_online" />
+        <include layout="@layout/shimmer_for_online" />
+
+
+
+    </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout_for_status"
+        android:layout_width="403dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="112dp"
+        app:layout_constraintBottom_toTopOf="@+id/swipeRefreshLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.075">
+        app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_for_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp">
 
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="416dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="208dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
@@ -32,64 +149,107 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.862" />
 
-    <ImageButton
-        android:id="@+id/addContacts"
-        android:layout_width="60dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="68dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/add_contacs4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/textInputLayout4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="360dp"
+        android:layout_height="47dp"
+        app:boxCornerRadiusBottomEnd="40dp"
+        app:boxCornerRadiusBottomStart="40dp"
+        app:boxCornerRadiusTopEnd="40dp"
+        app:boxCornerRadiusTopStart="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editphone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="      Search"
+            android:inputType="text"
+            android:text=""
+            android:textSize="17dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/editphone"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:paddingTop="8dp"
-        android:paddingLeft="30dp"
-        android:text="𝐂𝐡𝐢𝐭 𝐂𝐡𝐚𝐭"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        android:background="@color/Blue_for_start_up_page"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="180dp"
+        android:paddingTop="20dp"
+        android:text="Chats"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Musicbtn"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:text="Music"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/ads_page"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:alpha="0"
+        android:text="Ads"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="60dp"/>
+        app:layout_constraintHorizontal_bias="0.715"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageButton
         android:id="@+id/menubtn"
         android:layout_width="35dp"
-        android:layout_height="60dp"
-        android:background="@color/Blue_for_start_up_page"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:padding="2.5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/menu_3dots"
+        android:src="@drawable/three_lines_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.025"
+        app:tint="@color/black" />
 
-    <Button
-        android:id="@+id/Logoutbtn"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="184dp"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/search_btn"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="-315dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:rotation="280"
+        android:scaleType="fitCenter"
+        android:src="@drawable/search_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout4" />
+
+    <ImageButton
+        android:id="@+id/addContacts"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="9dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/add_contacs4"
+        app:layout_constraintBottom_toTopOf="@+id/swipeRefreshLayout"
+        app:layout_constraintEnd_toEndOf="@+id/editphone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.045" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
