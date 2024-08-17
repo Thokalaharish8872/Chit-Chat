@@ -13,4 +13,13 @@
     <!-- Add other color definitions as needed -->
     <color name ="ShimmerColor">#808080</color>
     <color name="StaleBlue">#6A5ACD</color>
+        <color name="purple_200">#141414</color>
+        <color name="purple_500">#141414</color>
+        <color name="purple_700">#141414</color>
+        <color name="teal_200">#FF03DAC5</color>
+        <color name="teal_700">#FF018786</color>
+
+        <color name="back_color">#141414</color>
+        <color name="fab_color">#20D761</color>
+
 </resources>

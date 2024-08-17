@@ -34,6 +34,10 @@ class MyAdapter2(var context: Activity, private var arrayList2 : ArrayList<start
         fun setItemOnLongClickListener(listener2: (Int) -> Boolean) {
             onItemLongClickListener = listener2
         }
+    fun updateList(newList: ArrayList<startuppagedata>) {
+        arrayList2 = newList
+        notifyDataSetChanged()
+    }
 
         inner class phoneDetailsViewHolder(
             itemView: View,

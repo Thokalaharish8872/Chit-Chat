@@ -1,9 +1,12 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
@@ -26,6 +30,8 @@ class StartUpPage : AppCompatActivity() {
 
     var arraylist= arrayListOf<startuppagedata>()
     var arraylist2= arrayListOf<startuppagedata>()
+    var filteredList = arrayListOf<startuppagedata>()
+    var filteredList2 = arrayListOf<startuppagedata>()
     lateinit var database: DatabaseReference
     lateinit var editphone:TextView
     var img2=123
@@ -33,6 +39,7 @@ class StartUpPage : AppCompatActivity() {
     lateinit var shimmerView2:ShimmerFrameLayout
     lateinit var myAdapter:MyAdapter
     lateinit var myAdapter2:MyAdapter2
+    private lateinit var lifecycleObserver: AppLifecycleObserver
     var wallpaper_value=0
 
     @SuppressLint("NotifyDataSetChanged")
@@ -44,6 +51,36 @@ class StartUpPage : AppCompatActivity() {
         shimmerView=findViewById(R.id.shimmer_layout)
         shimmerView2=findViewById(R.id.shimmer_layout2)
         var wallpaper=findViewById<ImageView>(R.id.Chats_tab_wallpaper3)
+        var chatsbtn=findViewById<TextView>(R.id.editphone)
+        var addcontact = findViewById<ImageButton>(R.id.addContacts)
+        var menubtn = findViewById<ImageButton>(R.id.menubtn)
+        var count=0
+
+        var searchbtn=findViewById<TextInputEditText>(R.id.Search)
+
+        chatsbtn.setOnClickListener(){
+            var sharedPref = getSharedPreferences("Hidden_Chats", Context.MODE_PRIVATE)
+            var Recent_pass=sharedPref.getString("Hidden_chats_password",null)
+            if(Recent_pass!=null){
+            intent=Intent(this,Enter_password::class.java)
+//            Toast.makeText(this,"Unlocked Hidden Chats",Toast.LENGTH_SHORT).show()
+            startActivity(intent)
+        }
+        else{
+
+                intent=Intent(this,Password_Check::class.java)
+//            Toast.makeText(this,"Unlocked Hidden Chats",Toast.LENGTH_SHORT).show()
+                startActivity(intent)
+        }}
+        addcontact.setOnClickListener() {
+            intent = Intent(applicationContext, AddContacts::class.java)
+            startActivity(intent)
+        }
+        menubtn.setOnClickListener() {
+            intent = Intent(this, EditingDetails::class.java)
+            startActivity(intent)
+        }
+
 
         var sharedPref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
         val PhoneNumber = sharedPref.getString("PhoneNumber", null)
@@ -56,7 +93,7 @@ class StartUpPage : AppCompatActivity() {
             intent.putExtra("imageUri",wallpaper.toString())
 
             if(wallpaper2!=null) {
-                Toast.makeText(this,"7",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,"7",Toast.LENGTH_SHORT).show()
 
 
 
@@ -112,14 +149,73 @@ class StartUpPage : AppCompatActivity() {
 
 
                             }
+//                            var ref2=FirebaseDatabase.getInstance().getReference("Last Mesages")
+//                            ref2.addValueEventListener(object : ValueEventListener {
+//                                override fun onDataChange(snapshot: DataSnapshot) {
+//                                    for(Data in snapshot.children){
+//                                        Toast.makeText(this@StartUpPage,Data.child("Last Message text").value.toString(),Toast.LENGTH_SHORT).show()
+//                                    }
+//
+//
+//                                }
+//
+//                                override fun onCancelled(error: DatabaseError) {
+//
+//                                }
+//                            })
 
-
-
-
-
-
-
-
+//                            databaseRef.child(phoneNumber.toString()).child("Added Contacts").addChildEventListener(object :
+//                                ChildEventListener {
+//                                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//                                    // Handle child added
+//                                    val contact = snapshot.getValue(startuppagedata::class.java)
+//                                    if (contact != null) {
+//                                        arraylist.add(contact)
+//                                        myAdapter.notifyItemInserted(arraylist.size - 1)
+//                                    }
+//                                }
+//
+//                                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                                    // Handle child changed
+//                                    val contact = snapshot.getValue(startuppagedata::class.java)
+//                                    if (contact != null) {
+//                                        val index = arraylist.indexOfFirst { it.phone == contact.phone }
+//                                        if (index != -1) {
+//                                            arraylist[index] = contact
+//                                            myAdapter.notifyItemChanged(index)
+//                                        }
+//                                    }
+//                                }
+//
+//                                override fun onChildRemoved(snapshot: DataSnapshot) {
+//                                    // Handle child removed
+//                                    val contact = snapshot.getValue(startuppagedata::class.java)
+//                                    if (contact != null) {
+//                                        val index = arraylist.indexOfFirst { it.phone == contact.phone }
+//                                        if (index != -1) {
+//                                            arraylist.removeAt(index)
+//                                            myAdapter.notifyItemRemoved(index)
+//                                        }
+//                                    }
+//                                }
+//
+//                                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                                    // Handle child moved
+//                                }
+//
+//                                override fun onCancelled(error: DatabaseError) {
+//                                    // Handle database error
+//                                }
+//                            })
+//
+//
+//
+//
+//
+//
+//
+//
+//
                         }
                 }
             }
@@ -174,14 +270,14 @@ class StartUpPage : AppCompatActivity() {
                 }
             }
 
-                    editphone = findViewById<TextView>(R.id.editphone)
-                    var addcontact = findViewById<ImageButton>(R.id.addContacts)
+//                    editphone = findViewById<TextView>(R.id.editphone)
+
                     var recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
 
                     var tasklist = arrayListOf<String>()
-                    var phone4 = editphone.text.toString()
+//                    var phone4 = editphone.text.toString()
 
-                    var menubtn = findViewById<ImageButton>(R.id.menubtn)
+
                     var adsbtn = findViewById<Button>(R.id.ads_page)
                     adsbtn.setOnClickListener(){
                         intent=Intent(this,Ads_page::class.java)
@@ -198,10 +294,8 @@ class StartUpPage : AppCompatActivity() {
 
                     myAdapter.setItemOnClickListner(object :MyAdapter.onItemClickListner{
                         override fun onItemClick(position: Int) {
-                            database=FirebaseDatabase.getInstance().getReference("users")
-                            database.child(phoneNumber.toString()).child("Added Contacts").child(arraylist[position].phone).get().addOnSuccessListener {
-//                                Toast.makeText(this@StartUpPage,isuploaded.toString(),Toast.LENGTH_SHORT).show()
-                                var wallpaper=it.child("updated_wallpaper").value
+                            var sharedPref2 = getSharedPreferences("Wallpaper", Context.MODE_PRIVATE)
+                            var wallpaper=sharedPref2.getString("PhoneNumber ${arraylist[position].phone}",null)
 
                                 intent = Intent(this@StartUpPage, chatPage::class.java)
                                 intent.putExtra("Name", arraylist[position].name)
@@ -210,7 +304,7 @@ class StartUpPage : AppCompatActivity() {
 
                                 intent.putExtra("imageUri",wallpaper.toString())
                                 if(wallpaper!=null) {
-                                    intent.putExtra("isuploaded2", "yes")
+                                    intent.putExtra("isuploaded2", "Yes")
                                 }
                                 else{
                                     intent.putExtra("isuploaded2","no")
@@ -222,29 +316,24 @@ class StartUpPage : AppCompatActivity() {
                                     getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
 
 
-                                var database2 = FirebaseDatabase.getInstance().getReference("users")
-                                database2.child(arraylist[position].phone).get()
-                                    .addOnSuccessListener {
-                                        var addedprof = it.child("IsPhotoUploaded").value.toString()
-                                        intent.putExtra("IsPhotoUploaded", addedprof)
-
-
-
-
-                                        database =
-                                            FirebaseDatabase.getInstance().getReference("users")
-                                        database.child(arraylist[position].phone).get()
-                                            .addOnSuccessListener {
-                                                var about2 = it.child("about").value.toString()
-                                                intent.putExtra("About", about2)
+//                                var database2 = FirebaseDatabase.getInstance().getReference("users")
+//                                database2.child(arraylist[position].phone).get()
+//                                    .addOnSuccessListener {
+//                                        var addedprof = it.child("IsPhotoUploaded").value.toString()
+//                                        intent.putExtra("IsPhotoUploaded", addedprof)
+//
+//
+//
+//
+//                                        database =
+//                                            FirebaseDatabase.getInstance().getReference("users")
+//                                        database.child(arraylist[position].phone).get()
+//                                            .addOnSuccessListener {
+//                                                var about2 = it.child("about").value.toString()
+//                                                intent.putExtra("About", about2)
 //                                Toast.makeText(this@StartUpPage,about2,Toast.LENGTH_SHORT).show()
                                                 startActivity(intent)
                                             }
-                                    }
-
-
-                            }
-                        }
 
 
                     })
@@ -285,7 +374,51 @@ class StartUpPage : AppCompatActivity() {
                         }
                         R.id.menu_button2 -> {
                             // Handle option 2 click
-                            Toast.makeText(this,"Unable To Delete Contact",Toast.LENGTH_SHORT).show()
+                            database.child(phoneNumber.toString()).child("Added Contacts").child(arraylist[position].phone).removeValue()
+                            Toast.makeText(this,"Contact Deleted Successfully",Toast.LENGTH_SHORT).show()
+                            true
+                        }
+                        R.id.menu_button3 -> {
+
+//                            database.child(phoneNumber.toString()).child("Added Contacts").child("Hidden Contacts").child(arraylist2[position].phone).setValue()
+
+                            databaseRef = FirebaseDatabase.getInstance().getReference("users")
+                            databaseRef.child(phoneNumber.toString()).child("Added Contacts").get().addOnSuccessListener { dataSnapshot ->
+                                arraylist.clear()
+                                for (snapshot in dataSnapshot.children) {
+                                    val contactId = snapshot.key
+//                                Toast.makeText(this, contactId, Toast.LENGTH_SHORT).show()
+                                    if (contactId != null) {
+                                        if(contactId==arraylist2[position].phone){
+                                            Toast.makeText(this,contactId,Toast.LENGTH_SHORT).show()
+                                            database.child(phoneNumber.toString()).child("Added Contacts").child("Hidden Contacts").child(arraylist2[position].phone).setValue(snapshot.value)
+                                            database.child(phoneNumber.toString()).child("Added Contacts").child(contactId).removeValue()
+
+
+
+                                        }else{
+
+                                        databaseRef.child(contactId).get()
+                                            .addOnSuccessListener { contactSnapshot ->
+                                                var contact =
+                                                    contactSnapshot.getValue(startuppagedata::class.java)
+                                                if (contact != null) {
+
+
+//                                                Toast.makeText(
+//                                                    this,
+//                                                    contact.name.toString(),
+//                                                    Toast.LENGTH_SHORT
+//                                                ).show()
+                                                    arraylist.add(contact)
+                                                    myAdapter.notifyDataSetChanged()
+                                                }}
+
+                                    }}
+                                }}
+//                            database.child(phoneNumber.toString()).child("Added Contacts").child(arraylist2[position].phone).setValue("none")
+
+                            Toast.makeText(this,"Contact Hidden",Toast.LENGTH_SHORT).show()
                             true
                         }
                         else -> false
@@ -304,10 +437,7 @@ class StartUpPage : AppCompatActivity() {
             shimmerView.stopShimmer()
             shimmerView.visibility=View.GONE
 
-            addcontact.setOnClickListener() {
-                        intent = Intent(applicationContext, AddContacts::class.java)
-                        startActivity(intent)
-                    }
+
 
                     val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
 
@@ -376,17 +506,31 @@ class StartUpPage : AppCompatActivity() {
                             }
 
                     }
-                    menubtn.setOnClickListener() {
-                        intent = Intent(this, EditingDetails::class.java)
-                        startActivity(intent)
-                    }
+
                 }
+        searchbtn.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString().trim()
+                filterContacts(query)
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
             }
     private var backPressedTime: Long = 0
 
     override fun onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            val sharedPref = getSharedPreferences("UserDetails", MODE_PRIVATE)
+            var sharedPref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
+            val phoneNumber = sharedPref.getString("PhoneNumber", null)
+            val phone = sharedPref.getString("Phone_of_recieve", null)
+            database.child(phoneNumber.toString()).child("Added Contacts").child(phone.toString()).child("isPlaying").setValue(false)
+            sharedPref = getSharedPreferences("UserDetails", MODE_PRIVATE)
             val userId = sharedPref.getString("PhoneNumber", null)
             database=FirebaseDatabase.getInstance().getReference("users")
             database.child(userId.toString()).child("Is_Online").setValue("False")
@@ -410,5 +554,28 @@ class StartUpPage : AppCompatActivity() {
 //            userStatusRef.child("last_active").setValue(System.currentTimeMillis())
 //        }
 //    }
+
+
+
+private fun filterContacts(query: String) {
+    filteredList.clear()
+    filteredList2.clear()
+    if (query.isNotEmpty()) {
+        for (contact in arraylist) {
+            if (contact.name.contains(query, ignoreCase = true) || contact.phone.contains(query, ignoreCase = true)) {
+                filteredList.add(contact)
+            }
+        }
+        for (contact in arraylist2) {
+            if (contact.name.contains(query, ignoreCase = true) || contact.phone.contains(query, ignoreCase = true)) {
+                filteredList2.add(contact)
+            }
+        }
+    } else {
+        filteredList.addAll(arraylist)
+    }
+    myAdapter?.updateList(filteredList)
+    myAdapter2?.updateList(filteredList2)
+}
 
 }

@@ -1,15 +1,21 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import MessageAdapter
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -22,6 +28,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -37,11 +44,16 @@ class chatPage : AppCompatActivity() {
     lateinit var about2: String
     lateinit var message:chatPage.Message
     var wallpaper1:Int=0
+    private lateinit var activityContext: Context
+    private lateinit var lifecycleObserver: AppLifecycleObserver
+
+
+
 
     lateinit var messageAdapter: MessageAdapter
     lateinit var messages: MutableList<Message>
 
-    data class Message(var senderimage:String="" ,var recieverImageProf: String = "", val text: String = "", var isSentByUser:Boolean=false,var currentUserId:String="",var phonenum:String="")
+    data class Message(var senderimage:String="" ,var recieverImageProf: String = "", val text: String = "", var isSentByUser:Boolean=false,var currentUserId:String="",var phonenum:String="",var isSystemMessage:Boolean=false,var timestamp: Long = System.currentTimeMillis())
 
 
 
@@ -59,12 +71,23 @@ class chatPage : AppCompatActivity() {
 
 
         }
+
+
+
         var sharedPref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
+        var phoneNumber=sharedPref.getString("PhoneNumber",null)
+        val roomId = if (phoneNumber!! < Phone) phoneNumber +"_"+ Phone else Phone +"_"+ phoneNumber
+        var is_chatted = sharedPref.getBoolean("Is Chatted with ${Phone}",false)
+        if(is_chatted==false){
+//            sendSystemMessage("New Conversation","New Conversation")
+        }
         with(sharedPref.edit()) {
             putString("Phone_of_recieve", Phone)
+            putBoolean("Is Chatted with ${Phone}",true)
             apply()
 
         }
+        activityContext=this
 
         var name = findViewById<TextView>(R.id.header_name)
         var profile_pic = findViewById<CircleImageView>(R.id.header_profile)
@@ -75,7 +98,34 @@ class chatPage : AppCompatActivity() {
         val sendButton = findViewById<ImageButton>(R.id.sendbtn)
         var menubtn=findViewById<ImageButton>(R.id.menubtn2)
         var wallpaper=findViewById<ImageView>(R.id.Chats_page_wallpaper2)
-        var Online_Or_Not=findViewById<TextView>(R.id.header_Online)
+        var song_name=findViewById<TextView>(R.id.Song)
+        var online=findViewById<TextView>(R.id.header_Online)
+//        var callbtn=findViewById<ImageButton>(R.id.Callbtn)
+//        callbtn.setOnClickListener(){
+//            intent=Intent(this,CallActivity::class.java)
+//        startActivity(intent)}
+        var count=0
+//        callbtn.setOnClickListener(){
+//            intent=Intent(this@chatPage,call_page_activity::class.java)
+//            startActivity(intent)
+//        }
+        val userStatusRef = FirebaseDatabase.getInstance().reference.child("users").child(Phone).child("status")
+        userStatusRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val status = snapshot.getValue(String::class.java)
+                if (status == "online") {
+                    online.setText("Online")
+                } else {
+                    online.setText("Offline")
+                    // Update UI to show user is offline
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        })
+
 
 
 
@@ -88,13 +138,112 @@ class chatPage : AppCompatActivity() {
                 textInputLayout.hint = "Message"
             }
         }
-
-
-
+        var database = FirebaseDatabase.getInstance()
         sharedPref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
         about.setText(about2)
-        var phoneNumber=sharedPref.getString("PhoneNumber",null)
-        val roomId = if (phoneNumber!! < Phone) phoneNumber +"_"+ Phone else Phone +"_"+ phoneNumber
+
+
+        val songIdRef: DatabaseReference =
+            database.getReference("Songs/${roomId}/Song Id")
+
+
+
+
+
+        songIdRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                var isplaying1 = database.getReference("Songs/$roomId").get().addOnSuccessListener { data ->
+                    if(data.exists()){
+//                    val isplaying = data.child("isPlaying").value
+                        song_name.text = data.child("Song Name").value.toString()
+                        if (data.child("played_by").value != phoneNumber) {
+
+
+
+
+                            val editor = sharedPref.edit()
+                            editor.putBoolean("isplay", false)
+                            editor.apply()
+
+                            val songId = snapshot.value
+//                            messages = mutableListOf()
+
+                                if(song_name.text.toString()!="null"){
+
+
+                                    var builder1 = AlertDialog.Builder(this@chatPage)
+                                    builder1.setTitle("Verification page")
+                                    builder1.setMessage(
+                                        "$Name has played a ${song_name.text} Previously Do you want to continue Listening"
+                                    )
+                                    builder1.setPositiveButton(
+
+                                        "Yes",
+
+                                        DialogInterface.OnClickListener { dialog, which ->
+
+                                            val trackUrl = "https://open.spotify.com/track/$songId"
+                                            val uri = Uri.parse(trackUrl)
+                                            val intent2 = Intent(Intent.ACTION_VIEW, uri)
+                                            startActivity(intent2)
+                                            Handler(Looper.getMainLooper()).postDelayed({
+                                                val returnIntent =
+                                                    Intent(this@chatPage, chatPage::class.java)
+                                                returnIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                                                startActivity(returnIntent)
+                                            }, 5000)
+                                            sendSystemMessage("You Just played ${song_name.text.toString()}","${song_name.text}","yes")
+//                                    sendSystemMessage("You Just played ${song_name.text.toString()}","${song_name.text}")
+
+
+                                        })
+                                    builder1.setNegativeButton(
+                                        "No",
+                                        DialogInterface.OnClickListener { dialog, which ->
+
+
+
+                                        })
+                                    builder1.show()
+
+
+
+                                }
+                            else{
+//                            sendSystemMessage("$Name Just played ${song_name.text.toString()}","${song_name.text}")
+
+
+
+                                val trackUrl = "https://open.spotify.com/track/$songId"
+                                val uri = Uri.parse(trackUrl)
+                                val intent2 = Intent(Intent.ACTION_VIEW, uri)
+                                startActivity(intent2)
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    val returnIntent = Intent(this@chatPage, chatPage::class.java)
+                                    returnIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                                    startActivity(returnIntent)
+                                }, 5000)
+                                Toast.makeText(this@chatPage, "Song Playing", Toast.LENGTH_SHORT).show()
+                            }
+
+
+
+                        }
+
+                        else{
+                            sendSystemMessage("You Just played ${song_name.text.toString()}","${song_name.text}","no")
+                            Toast.makeText(this@chatPage, "Song Playing23", Toast.LENGTH_SHORT).show()
+
+                        }
+                    }
+                }}
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle database error
+            }
+        })
+
 
 
         var isuploaded=intent.getStringExtra("isuploaded2")
@@ -110,19 +259,6 @@ class chatPage : AppCompatActivity() {
             if(imageUri!=null){
                 Picasso.get().load(imageUri).into(wallpaper)
             }}
-       database2=FirebaseDatabase.getInstance().getReference("users")
-        database2.child(Phone).get().addOnSuccessListener {
-
-                        var Is_online=it.child("Is_Online").value.toString()
-//                        Toast.makeText(this, Is_online, Toast.LENGTH_SHORT).show()
-                        if(Is_online=="True"){
-                            Online_Or_Not.text="Online"
-
-                        }else{
-                            Online_Or_Not.text="Offline"
-
-                        }}
-
 
 
 
@@ -143,9 +279,11 @@ class chatPage : AppCompatActivity() {
 
 
         Music.setOnClickListener() {
-            intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.spotify.com"))
-            var choose = Intent.createChooser(intent, "Open With")
-            startActivity(choose)
+//            sendSystemMessage("hey")
+
+            intent = Intent(this,musicpage_spotify::class.java)
+
+            startActivity(intent)
         }
 
         name.text = Name
@@ -165,6 +303,7 @@ class chatPage : AppCompatActivity() {
 //            recyclerView.scrollToPosition(newPosition)
 //            scrollToBottomButton.visibility = View.GONE
 //        }
+
         fun isUserAtBottom(): Boolean {
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
             val pos = layoutManager.findLastCompletelyVisibleItemPosition()
@@ -194,16 +333,24 @@ class chatPage : AppCompatActivity() {
                 phoneNumber = sharedPref.getString("PhoneNumber", null)
                 var password = sharedPref.getString("Password", null)
                 database2 = FirebaseDatabase.getInstance().getReference("users")
+
                 database2.child(phoneNumber.toString()).get().addOnSuccessListener {
                     var uriimg = it.child("photo").value.toString()
 //                    Toast.makeText(this@chatPage, phoneNumber.toString(), Toast.LENGTH_SHORT).show()
 //                    Toast.makeText(this,Phone,Toast.LENGTH_SHORT).show()
                     var num=Phone
 
-                    message = Message(senderimage = uriimg, recieverImageProf =  Profile, text =  messageText, isSentByUser = true,currentUserId=phoneNumber.toString())
-
+                    message = Message(senderimage = uriimg, recieverImageProf =  Profile, text =  messageText, isSentByUser = true,currentUserId=phoneNumber.toString(), timestamp = System.currentTimeMillis())
+                    var data=database2.child(phoneNumber.toString()).child("Added Contacts").child(Phone).child("timestamp").setValue(System.currentTimeMillis())
                     // Push the chat message to the database
-                    myRef.push().setValue(message)
+                    var messageId=myRef.push().setValue(message)
+
+
+//                    var LastMessage=FirebaseDatabase.getInstance().getReference("Last Messages").child(roomId)
+//                    LastMessage.child(messageId.toString()).setValue(message)
+//                    LastMessage.child("Last Message text").setValue(messageText)
+//                    Toast.makeText(this@chatPage,messageId.toString(),Toast.LENGTH_SHORT).show()
+
 
                     recyclerView.postDelayed({
                         newPosition = messageAdapter.itemCount - 1
@@ -269,8 +416,11 @@ class chatPage : AppCompatActivity() {
                     }
 
                     messages.add(newMessage)
-//                    Toast.makeText(this@chatPage,messages.size.toString(),Toast.LENGTH_SHORT).show()
+                    Log.e("Chatpage", "hello Hi${count++}")
+
+
                     messageAdapter.notifyItemInserted(messages.size - 1)
+
                 }
             }
 
@@ -284,25 +434,73 @@ class chatPage : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {}
         })
 
+
         menubtn.setOnClickListener {
             showDialog()
-//            Toast.makeText(this@chatPage,messages.size.toString(),Toast.LENGTH_SHORT).show()
         }
-        textInputEditText?.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                textInputLayout.hint = ""
-                if(messages.size<5){
+        messageAdapter.setItemOnLongClickListener { position->
+            // Handle the long-click event
+            val message = messages[position]
+            // Get the view of the item at the position
+            val v = recyclerView.layoutManager?.findViewByPosition(position)
 
+            // Create a PopupMenu object
+            val popup = PopupMenu(activityContext, v)
+
+            // Inflate your menu resource into the PopupMenu
+            popup.menuInflater.inflate(R.menu.menu_for_message, popup.menu)
+
+            // Set a click listener for menu item click
+            popup.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_button -> {
+                        Toast.makeText(this@chatPage,"Unable to Forward Message",Toast.LENGTH_SHORT).show()
+
+                        // Handle option 1 click
+                        true
+                    }
+                    R.id.menu_button2 -> {
+                        // Handle option 2 click
+                        myRef.child(phoneNumber.toString()).child("Added Contacts").child(Phone).child(messages[position].text).removeValue()
+                        Toast.makeText(this@chatPage,"Contact Deleted Successfully",Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    R.id.menu_button3 -> {
+                        Toast.makeText(this@chatPage,"Message Has Been Added to Contacts",Toast.LENGTH_SHORT).show()
+
+
+//                         }
+                    }
+                    R.id.menu_button4 -> {
+                        Toast.makeText(this@chatPage,"Copied To Clipboard",Toast.LENGTH_SHORT).show()
+
+
+//                         }
+                    }
                 }
-            } else {
-                textInputLayout.hint = "Message"
+//                            database.child(phoneNumber.toString()).child("Added Contacts").child(arraylist2[position].phone).setValue("none")
+
+
+                true
             }
+
+
+
+
+//                 Finally show the PopupMenu
+            popup.show()
+
+            true
+            // Return true to indicate the event was handled
         }
-
-
-
-
+        // Replace with the actual phone number
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
     }
+
+
+
+
     private fun showDialog() {
         val options = arrayOf("Media", "Edit Contact", "Wallpaper","Advanced Settings")
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialog))
@@ -367,6 +565,69 @@ class chatPage : AppCompatActivity() {
         layoutParams.width = dialogWindowWidth
         window?.attributes = layoutParams
 
+
+    }
+    private fun sendSystemMessage(text: String,text1:String,isyes:String) {
+        val systemMessage = Message(
+            text = text,
+            isSystemMessage = true
+        )
+        var count=0
+
+
+
+        var sharedPref = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
+//        about.setText(about2)
+        var phoneNumber=sharedPref.getString("PhoneNumber",null)
+
+        val roomId = if (phoneNumber!! < Phone) phoneNumber +"_"+ Phone else Phone +"_"+ phoneNumber
+
+        var lastmsg=FirebaseDatabase.getInstance().getReference("Last Messages/${roomId}").get().addOnSuccessListener {
+
+            if(it.exists()) {
+                Toast.makeText(this@chatPage,"text1",Toast.LENGTH_SHORT).show()
+                var Lastmsg = it.child("Last Message text").value.toString()
+//                Toast.makeText(this@chatPage,Lastmsg,Toast.LENGTH_SHORT).show()
+
+                if (Lastmsg != text1) {
+
+                    Toast.makeText(this@chatPage,text1,Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@chatPage,Lastmsg,Toast.LENGTH_SHORT).show()
+
+                    var LastMessage =
+                        FirebaseDatabase.getInstance().getReference("Last Messages").child(roomId)
+
+//        myRef.child("Last Message").child("Last Message Id").setValue(messageId)
+                    LastMessage.child("Last Message text").setValue(text1)
+                    myRef.push().setValue(systemMessage)
+
+
+                }
+                else if(isyes=="yes"){
+                    Toast.makeText(this@chatPage,text1,Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@chatPage,Lastmsg,Toast.LENGTH_SHORT).show()
+
+                    var LastMessage =
+                        FirebaseDatabase.getInstance().getReference("Last Messages").child(roomId)
+
+//        myRef.child("Last Message").child("Last Message Id").setValue(messageId)
+                    LastMessage.child("Last Message text").setValue(text1)
+                    myRef.push().setValue(systemMessage)
+
+                }
+                else if(isyes=="no"){
+                    Toast.makeText(this@chatPage,"hey",Toast.LENGTH_SHORT).show()
+                }
+            }
+            else{
+                Toast.makeText(this@chatPage,"text2",Toast.LENGTH_SHORT).show()
+                var lastmsg=FirebaseDatabase.getInstance().getReference("Last Messages/${roomId}/Last Message text").setValue("New Conversation")
+                myRef.push().setValue(systemMessage)
+            }
+        }
+
+
+//        LastMessage.child("Last Message Time").setValue()
 
     }
 

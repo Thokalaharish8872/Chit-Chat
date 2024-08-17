@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MyAdapter(var context: Activity, private var arrayList : ArrayList<startuppagedata>):
     RecyclerView.Adapter<MyAdapter.phoneDetailsViewHolder>() {
@@ -33,6 +36,10 @@ class MyAdapter(var context: Activity, private var arrayList : ArrayList<startup
     fun setItemOnLongClickListener(listener2: (Int) -> Boolean) {
         onItemLongClickListener = listener2
     }
+    fun updateList(newList: ArrayList<startuppagedata>) {
+        arrayList = newList
+        notifyDataSetChanged()
+    }
 
     inner class phoneDetailsViewHolder(
         itemView: View,
@@ -41,8 +48,10 @@ class MyAdapter(var context: Activity, private var arrayList : ArrayList<startup
     ): RecyclerView.ViewHolder(itemView){
 
         var personName : TextView = itemView.findViewById(R.id.name1)
-        var personPhone : TextView = itemView.findViewById(R.id.Phone1)
+//        var personPhone : TextView = itemView.findViewById(R.id.Phone1)
         var personpic =itemView.findViewById<CircleImageView>(R.id.profile_image)
+        var lastMessage : TextView = itemView.findViewById(R.id.Last_Message)
+        var time:TextView=itemView.findViewById(R.id.time)
 
         init {
             itemView.setOnClickListener{
@@ -61,12 +70,43 @@ class MyAdapter(var context: Activity, private var arrayList : ArrayList<startup
         return phoneDetailsViewHolder(view,myListener,onItemLongClickListener)
     }
 
+
     override fun onBindViewHolder(holder: phoneDetailsViewHolder, position: Int) {
+
         var sharedPref =context.getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
         var phoneNumber = sharedPref.getString("PhoneNumber", null)
         holder.personName.text=arrayList[position].name
         var database= FirebaseDatabase.getInstance().getReference("users")
         database.child(phoneNumber.toString()).child("Added Contacts").child(arrayList[position].phone).child("nickname").get().addOnSuccessListener {
+//            val roomId = if (phoneNumber!! < arrayList[position].phone) phoneNumber +"_"+ arrayList[position].phone else arrayList[position].phone +"_"+ phoneNumber
+//           var database2 = FirebaseDatabase.getInstance()
+//            val Last_Message: DatabaseReference =
+//                database2.getReference("Last Messages /${roomId}/Last Message text")
+//            var lastMessagetext=database2.getReference("Last Messages/${roomId}").get().addOnSuccessListener {
+//                var lastMessagetext2=it.child("Last Message text").value.toString()
+//                holder.lastMessage.text=lastMessagetext2.toString()
+//            }
+//
+//                Last_Message.addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+////                        var lastMessageId = snapshot.value
+////                        var Last_Message2= FirebaseDatabase.getInstance().getReference("conversations/${roomId}/Last Message/Last Message Id").get().addOnSuccessListener {
+////                            var lastMessageId=it.value.toString()
+//                        Toast.makeText(context, snapshot.value.toString(), Toast.LENGTH_SHORT).show()
+////                            var Last_Message2= FirebaseDatabase.getInstance().getReference("Last Messages/${roomId}").get().addOnSuccessListener {
+////                            var Last_Message3=it.child("Last Message text").value.toString()
+////                            if(Last_Message3.isNotEmpty()){
+////                                holder.lastMessage.text=Last_Message3
+////
+////                            }}
+////                        }
+//
+//            }
+
+//                    override fun onCancelled(error: DatabaseError) {
+//                        TODO("Not yet implemented")
+//                    }
+//                })
 
             if(it.exists()){
                 if(it.value.toString()!="") {
@@ -84,7 +124,10 @@ class MyAdapter(var context: Activity, private var arrayList : ArrayList<startup
                     holder.personName.text = arrayList[position].name
 
             }
+
         }
+        holder.lastMessage.text=(sharedPref.getString("Last Message for ${arrayList[position].phone}", "hey!"))
+
 //        holder.personPhone.text=arrayList[position].phone
 //        holder.personpic.setImageResource(arrayList[position].pic)
         if (!arrayList[position].photo.isNullOrEmpty()) {
@@ -96,11 +139,14 @@ class MyAdapter(var context: Activity, private var arrayList : ArrayList<startup
         }
 
 
-
+        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val time = sdf.format(Date(arrayList[position].timestamp))
+        holder.time?.text = time
 
     }
 
     override fun getItemCount(): Int {
         return arrayList.size
     }
+
 }

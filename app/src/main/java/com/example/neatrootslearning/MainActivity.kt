@@ -1,5 +1,6 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     lateinit var database:DatabaseReference
+    private lateinit var lifecycleObserver: AppLifecycleObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,14 +18,16 @@ class MainActivity : AppCompatActivity() {
         var sharedPref = getSharedPreferences("UserDetails", MODE_PRIVATE)
         var isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
 
+        val userId = sharedPref.getString("PhoneNumber", null)
 
 
         Handler().postDelayed({
             if(isLoggedIn) {
-                val userId = sharedPref.getString("PhoneNumber", null)
+
                 database=FirebaseDatabase.getInstance().getReference("users")
                 database.child(userId.toString()).child("Is_Online").setValue("True")
                 intent=Intent(this,StartUpPage::class.java)
+
 
                 startActivity(intent)
                 finish()
@@ -38,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         },1000)
 
-
+        val phoneNumber = userId // Replace with the actual phone number
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
     }
 }

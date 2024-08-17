@@ -1,5 +1,6 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -19,6 +20,7 @@ class AddContacts : AppCompatActivity() {
     lateinit var profileimg:CircleImageView
     lateinit var img2:CircleImageView
     lateinit var database : DatabaseReference
+    private lateinit var lifecycleObserver: AppLifecycleObserver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_contacts)
@@ -90,6 +92,9 @@ class AddContacts : AppCompatActivity() {
 
 
 
+
+
+
                                     intent = Intent(this, StartUpPage::class.java)
                                     intent.putExtra("phoneNumber", phone)
                                     startActivity(intent)
@@ -122,5 +127,7 @@ class AddContacts : AppCompatActivity() {
 
             }
         }
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
     }
 }
