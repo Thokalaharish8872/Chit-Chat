@@ -8,14 +8,13 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="400dp"
+        android:layout_width="468dp"
 
-        android:layout_height="400dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginBottom="104dp"
+        android:layout_height="465dp"
+        android:layout_marginBottom="52dp"
         android:background="@drawable/blue_round_for_edit_contact"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout4" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -23,12 +22,13 @@
 
         android:layout_height="400dp"
         android:layout_marginEnd="188dp"
-        android:layout_marginBottom="356dp"
+        android:layout_marginBottom="328dp"
         android:background="@drawable/red_round_for_edit_contact"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout4"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginStart="156dp"
@@ -275,6 +275,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/Back_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/scroll_down"
+        app:layout_constraintBottom_toTopOf="@+id/circleImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:rotation="270"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

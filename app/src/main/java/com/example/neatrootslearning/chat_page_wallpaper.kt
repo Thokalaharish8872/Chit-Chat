@@ -1,5 +1,6 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
@@ -29,6 +30,7 @@ class chat_page_wallpaper : AppCompatActivity() {
     lateinit var Profile:String
     private lateinit var phoneNumber: String
     private val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1
+    private lateinit var lifecycleObserver: AppLifecycleObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +89,15 @@ class chat_page_wallpaper : AppCompatActivity() {
             intent.putExtra("Photo",Profile)
             intent.putExtra("imageUri",uri.toString())
             intent.putExtra("isuploaded2", "yes")
+            var sharedPref2 = getSharedPreferences("Wallpaper", Context.MODE_PRIVATE)
+            with (sharedPref2.edit()) {
+                putString("PhoneNumber ${Phone}", uri.toString())
+
+
+
+                apply()
+
+            }
             progressDialog.dismiss()
             startActivity(intent)
             finish()
@@ -216,6 +227,8 @@ class chat_page_wallpaper : AppCompatActivity() {
         }else{
             Toast.makeText(this,"no",Toast.LENGTH_SHORT).show()
         }
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
     }
 }
 

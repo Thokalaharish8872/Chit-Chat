@@ -1,5 +1,6 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
@@ -34,6 +35,7 @@ class EditingDetails : AppCompatActivity() {
     private lateinit var profileimg: CircleImageView
     private val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1
     lateinit var about:String
+    private lateinit var lifecycleObserver: AppLifecycleObserver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +62,7 @@ class EditingDetails : AppCompatActivity() {
         var logoutbtn = findViewById<ImageButton>(R.id.Logoutbtn)
         var uploadimg = findViewById<ImageButton>(R.id.editphoto)
         profileimg = findViewById<CircleImageView>(R.id.circleImageView)
+        var backbtn=findViewById<ImageButton>(R.id.Back_btn)
         val tag2: Any? = profileimg.getTag()
         if (tag2 is Int) {
             val img3: Int = tag2
@@ -69,6 +72,10 @@ class EditingDetails : AppCompatActivity() {
             }
 
 
+        }
+        backbtn.setOnClickListener(){
+            intent=Intent(this,StartUpPage::class.java)
+            startActivity(intent)
         }
 
         val storageRef = FirebaseStorage.getInstance().reference
@@ -216,6 +223,8 @@ class EditingDetails : AppCompatActivity() {
 //            Toast.makeText(this, "Profile pic Uploaded Successfully", Toast.LENGTH_SHORT).show()
 //
 //        }
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
 
     }
 

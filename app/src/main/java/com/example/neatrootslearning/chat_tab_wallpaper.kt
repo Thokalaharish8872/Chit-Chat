@@ -1,5 +1,6 @@
 package com.example.neatrootslearning
 
+import AppLifecycleObserver
 import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
@@ -29,6 +30,7 @@ class chat_tab_wallpaper : AppCompatActivity() {
     lateinit var Profile:String
     private lateinit var phoneNumber: String
     private val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1
+    private lateinit var lifecycleObserver: AppLifecycleObserver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_tab_wallpaper)
@@ -210,5 +212,7 @@ class chat_tab_wallpaper : AppCompatActivity() {
         }else{
             Toast.makeText(this,"no", Toast.LENGTH_SHORT).show()
         }
+        lifecycleObserver = AppLifecycleObserver(phoneNumber!!)
+        lifecycle.addObserver(lifecycleObserver)
     }
 }

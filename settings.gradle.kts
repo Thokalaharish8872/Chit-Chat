@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "neat roots(Learning)"
 include(":app")
- 
+//include (":spotify-app-remote")
+

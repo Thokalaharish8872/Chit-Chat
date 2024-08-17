@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:id="@+id/receiverLayout"
-        android:layout_width="330dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
@@ -26,30 +26,49 @@
             android:paddingTop="13dp"
             android:paddingBottom="10dp"
             android:src="@drawable/no_profile_pic"
-            android:alpha="0"
-            />
+            android:alpha="0" />
 
-        <TextView
-            android:id="@+id/receivertext"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/receiver_const_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="15dp"
             android:background="@drawable/message_recieved"
-            android:paddingBottom="11dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="11dp"
-            android:paddingRight="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="15dp"
-            android:textAlignment="viewStart"
-            android:alpha="0"
-            />
+            android:padding="10dp"
+            android:alpha="0">
+
+            <TextView
+                android:id="@+id/receivertext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="15dp"
+                android:maxWidth="250dp"
+                android:textAlignment="viewStart"
+                android:alpha="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/receiver_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/receiver_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textColor="#888888"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:textSize="10sp"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/senderLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="15dp"
@@ -58,39 +77,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-
-        <TextView
-            android:id="@+id/sendertext"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sender_const_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginEnd="50dp"
             android:background="@drawable/chat_box_background"
-            android:paddingBottom="11dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="11dp"
-            android:paddingRight="10dp"
-            android:textSize="15dp"
-            android:textColor="@android:color/white"
-            android:textAlignment="viewStart"
-            android:alpha="0"/>
+            android:padding="10dp"
+            android:alpha="0">
 
+            <TextView
+                android:id="@+id/sendertext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:maxWidth="250dp"
+                android:textColor="@android:color/white"
+                android:textAlignment="viewStart"
+                android:alpha="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sender_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/sender_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/senderprofile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:alpha="0"
+            android:src="@drawable/no_profile_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.428" />
     </LinearLayout>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/senderprofile"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="7dp"
-        android:src="@drawable/no_profile_pic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

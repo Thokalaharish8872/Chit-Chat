@@ -1,13 +1,22 @@
 package com.example.neatrootslearning
 
+//import android.animation.AnimatorListenerAdapter
+
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,12 +32,14 @@ class SignUp : AppCompatActivity() {
 //    }
 
     lateinit var database : DatabaseReference
+    private lateinit var imgLogo: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
         var SignUp=findViewById<Button>(R.id.btn_SignUp)
-        var Already=findViewById<Button>(R.id.btn_Already)
+        var Already=findViewById<TextView>(R.id.btn_Already)
+        var inputname= findViewById<TextInputLayout>(R.id.inputname)
 
         var name1=findViewById<TextInputEditText>(R.id.editname)
         var phone1=findViewById<TextInputEditText>(R.id.editphone)
@@ -36,6 +47,41 @@ class SignUp : AppCompatActivity() {
         var inputPassword =findViewById<TextInputLayout>(R.id.inputpassword)
         val inputPhoneLayout: TextInputLayout = findViewById(R.id.inputphone)
 
+        imgLogo = findViewById(R.id.img_logo)
+
+        // Prepare animations
+        val animX = ObjectAnimator.ofFloat(imgLogo, "translationX", 0f)
+        animX.duration = 3000 // Animation duration in milliseconds
+        animX.interpolator = AccelerateDecelerateInterpolator()
+
+        // Create ObjectAnimator for Y translation
+        val animY = ObjectAnimator.ofFloat(imgLogo, "translationY", 0f)
+        animY.duration = 3000 // Animation duration in milliseconds
+        animY.interpolator = AccelerateDecelerateInterpolator()
+
+        // Create AnimatorSet to play both animations together
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(animX, animY)
+
+        // Optionally, add listeners to handle animation events
+        animatorSet.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+                imgLogo.visibility = View.VISIBLE // Make logo visible when animation starts
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                // Animation ended, do something if needed
+            }
+
+            override fun onAnimationCancel(animation: Animator) {}
+
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
+
+        // Start the animation
+        animatorSet.start()
+
+        inputname.setBoxStrokeColor(ContextCompat.getColor(this, R.color.StaleBlue))
         inputPhoneLayout.setBoxStrokeColor(ContextCompat.getColor(this, R.color.StaleBlue))
         inputPhoneLayout.hint="Phone"
         inputPhoneLayout.setHintTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.StaleBlue)))

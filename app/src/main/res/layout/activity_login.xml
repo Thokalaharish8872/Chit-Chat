@@ -1,122 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".Login">
+    <!-- Gradient Background -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:src="@drawable/chitchat_withoutbackground"
-        app:layout_constraintBottom_toTopOf="@+id/inputphone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputphone"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:hint="Phone"
-        app:boxCornerRadiusBottomEnd="30dp"
-        app:boxCornerRadiusBottomStart="30dp"
-        app:boxCornerRadiusTopEnd="30dp"
-        app:boxCornerRadiusTopStart="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.649">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editphone"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:inputType="phone"
-            android:paddingStart="20sp"
-            android:paddingBottom="13dp"
-            android:textSize="15dp"
-            tools:layout_editor_absoluteX="37dp"
-            tools:layout_editor_absoluteY="268dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputpassword"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        app:boxCornerRadiusBottomEnd="30dp"
-        app:boxCornerRadiusBottomStart="30dp"
-        app:boxCornerRadiusTopEnd="30dp"
-        app:boxCornerRadiusTopStart="30dp"
-        app:endIconMode="password_toggle"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputphone"
-        app:layout_constraintVertical_bias="0.173">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editpassword"
+        <!-- Centered Container -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="24dp"
-            android:inputType="textPassword"
-            android:paddingStart="20dp"
-            android:paddingBottom="13dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_corner_bg"
+            android:padding="32dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="4dp">
 
-    <Button
-        android:id="@+id/btn_Login"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="156dp"
-        android:background="@drawable/background_for_sign_in_page_signup"
-        android:text="Log In"
-        android:textColor="@color/white"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Dont"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent" />
+            <!-- App Logo -->
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/chitchat_withoutbackground"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp" />
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
-        android:text="Forgot Password?"
-        android:textSize="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Dont"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Login"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"/>
+            <!-- Title -->
+            <TextView
+                android:id="@+id/Welcome_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome back!"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btn_Dont"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/background_for_sign_in_page_login"
-        android:text="DON'T HAVE AN ACCOUNT ?"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <!-- Username Input -->
+
+            <!-- Password Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputphone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginTop="24dp"
+
+                    android:padding="16dp"
+                    android:layout_marginBottom="20dp"
+
+                    android:paddingBottom="13dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputpassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="password_toggle"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editpassword"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+
+                android:layout_marginTop="24dp"
+
+                android:padding="16dp"
+                android:layout_marginBottom="20dp"
+
+                android:paddingBottom="13dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/btn_Login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:background="@drawable/rounded_button"
+                android:textColor="@android:color/white"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Forgot Password Link -->
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot Password?"
+                android:textColor="#007bff"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Sign Up Link -->
+            <TextView
+                android:id="@+id/btn_Dont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account? Sign Up"
+                android:textColor="#007bff"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

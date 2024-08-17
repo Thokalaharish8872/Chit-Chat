@@ -72,38 +72,46 @@
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_layout2"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="414dp"
+        android:layout_height="76dp"
         app:layout_constraintBottom_toTopOf="@+id/shimmer_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout_for_status" >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout_for_status">
 
-        <include layout="@layout/shimmer_for_online" />
+        <LinearLayout
+            android:layout_width="401dp"
+            android:layout_height="65dp"
+            android:orientation="horizontal">
 
-        <include layout="@layout/shimmer_for_online" />
-        <include layout="@layout/shimmer_for_online" />
-        <include layout="@layout/shimmer_for_online" />
-        <include layout="@layout/shimmer_for_online" />
-        <include layout="@layout/shimmer_for_online" />
-        <include layout="@layout/shimmer_for_online" />
-        \<include layout="@layout/shimmer_for_online" />
-        <include layout="@layout/shimmer_for_online" />
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
+            \
+
+            <include layout="@layout/shimmer_for_online" />
+
+            <include layout="@layout/shimmer_for_online" />
 
 
-
-    </LinearLayout>
+        </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout_for_status"
         android:layout_width="403dp"
-        android:layout_height="91dp"
-        android:layout_marginTop="112dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="130dp"
         app:layout_constraintBottom_toTopOf="@+id/swipeRefreshLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -154,7 +162,7 @@
         android:id="@+id/textInputLayout4"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="360dp"
-        android:layout_height="47dp"
+        android:layout_height="50dp"
         app:boxCornerRadiusBottomEnd="40dp"
         app:boxCornerRadiusBottomStart="40dp"
         app:boxCornerRadiusTopEnd="40dp"
@@ -165,13 +173,15 @@
         app:layout_constraintTop_toBottomOf="@+id/editphone">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name"
+            android:id="@+id/Search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="      Search"
+            android:hint="Search"
+            android:paddingStart="50dp"
+            android:paddingBottom="13dp"
             android:inputType="text"
             android:text=""
-            android:textSize="17dp" />
+            android:textSize="15dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
