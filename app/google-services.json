@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "390860306120",
+    "project_id": "chit-chat-ea749",
+    "storage_bucket": "chit-chat-ea749.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390860306120:android:ea3a4db53be66434ebd7fd",
+        "android_client_info": {
+          "package_name": "com.example.neatrootslearning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNi5dovgniZUuZ8KIeRPNeHTS8YW-MZ6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

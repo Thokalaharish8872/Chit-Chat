@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#3aefe3</color>
+    <color name="Green">#008000</color>
+    <color name="Blue2">#005ce6</color>
+    <color name="Blue_for_start_up_page">#0066ff</color>
+    <color name="colorPrimary">#3F51B5</color> <!-- Replace with your desired color -->
+    <color name="colorPrimaryDark">#303F9F</color> <!-- Replace with your desired color -->
+    <color name="colorAccent">#FF4081</color>
+    <color name="orange">#e86100</color><!-- Replace with your desired color -->
+    <!-- Add other color definitions as needed -->
+    <color name ="ShimmerColor">#808080</color>
+    <color name="StaleBlue">#6A5ACD</color>
+        <color name="purple_200">#141414</color>
+        <color name="purple_500">#141414</color>
+        <color name="purple_700">#141414</color>
+        <color name="teal_200">#FF03DAC5</color>
+        <color name="teal_700">#FF018786</color>
+
+        <color name="back_color">#141414</color>
+        <color name="fab_color">#20D761</color>
+
+</resources>
