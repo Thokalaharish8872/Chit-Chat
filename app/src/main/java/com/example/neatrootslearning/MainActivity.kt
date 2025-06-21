@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var sharedPref = getSharedPreferences("UserDetails", MODE_PRIVATE)
         var isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
+        var userId = sharedPref.getString("PhoneNumber","6301029863")
 
 
         Handler().postDelayed({
