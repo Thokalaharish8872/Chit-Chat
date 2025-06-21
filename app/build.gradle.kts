@@ -68,15 +68,6 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation ("io.github.webrtc-sdk:android:125.6422.03")
 //    implementation("com.google.firebase:firebase-database:20.0.5")
-    // Add Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0")) // Use latest
-
-// Firebase SDKs (no versions needed here)
-    implementation("com.google.firebase:firebase-messaging")
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-storage")
-
 
 
 

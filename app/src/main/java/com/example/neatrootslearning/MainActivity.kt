@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         var sharedPref = getSharedPreferences("UserDetails", MODE_PRIVATE)
         var isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
 
-        val userId = sharedPref.getString("PhoneNumber", "Unknown User")
 
         Handler().postDelayed({
             if(isLoggedIn) {

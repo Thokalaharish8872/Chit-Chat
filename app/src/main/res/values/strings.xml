@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">Chit Chat</string>
-    <string name="menu_button_desc">Open menu</string>
-    <string name="search_hint">Search</string>
-    <string name="call_user_3">Call User 3</string>
-
 </resources>
